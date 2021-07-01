@@ -44,6 +44,10 @@ local function GenerateDKPTables(table, format)
 
 		elseif table == CommDKP:GetTable(CommDKP_Loot, true) then
 			local numrows;
+			local baseUrl = "https://classic.wowhead.com/";
+			if WOW_PROJECT_ID == WOW_PROJECT_BURNING_CRUSADE_CLASSIC then
+				baseUrl = "https://tbc.wowhead.com/";
+			end
 
 			if #CommDKP:GetTable(CommDKP_Loot, true) > 200 then
 				numrows = 200;
@@ -54,7 +58,7 @@ local function GenerateDKPTables(table, format)
 			for i=1, numrows do
 				local cur = CommDKP:GetTable(CommDKP_Loot, true)[i].loot
 				local itemNumber = strsub(cur, string.find(cur, "Hitem:")+6, string.find(cur, ":", string.find(cur, "Hitem:")+6)-1)
-				ExportString = ExportString.."      <div class=\"divTableRow\">\n         <div class=\"divPlayer\" style=\"width: 40%;\"><a href=\"https://classic.wowhead.com/item="..itemNumber.."\" data-wowhead=\"item="..itemNumber.."\"></a> ("..CommDKP:GetTable(CommDKP_Loot, true)[i].cost.." DKP)</div>\n         <div class=\"divClass\" style=\"width: 20%;\">"..CommDKP:GetTable(CommDKP_Loot, true)[i].player.."</div>\n         <div class=\"divDKP\" style=\"width: 40%; font-size: 0.7em;\">"..CommDKP:GetTable(CommDKP_Loot, true)[i].zone..": "..CommDKP:GetTable(CommDKP_Loot, true)[i].boss.."<br />("..date("%m/%d/%y %H:%M:%S", CommDKP:GetTable(CommDKP_Loot, true)[i].date)..") </div>\n      </div>\n"
+				ExportString = ExportString.."      <div class=\"divTableRow\">\n         <div class=\"divPlayer\" style=\"width: 40%;\"><a href=\""..baseUrl.."item="..itemNumber.."\" data-wowhead=\"item="..itemNumber.."\"></a> ("..CommDKP:GetTable(CommDKP_Loot, true)[i].cost.." DKP)</div>\n         <div class=\"divClass\" style=\"width: 20%;\">"..CommDKP:GetTable(CommDKP_Loot, true)[i].player.."</div>\n         <div class=\"divDKP\" style=\"width: 40%; font-size: 0.7em;\">"..CommDKP:GetTable(CommDKP_Loot, true)[i].zone..": "..CommDKP:GetTable(CommDKP_Loot, true)[i].boss.."<br />("..date("%m/%d/%y %H:%M:%S", CommDKP:GetTable(CommDKP_Loot, true)[i].date)..") </div>\n      </div>\n"
 			end
 			ExportString = ExportString.."   </div>\n</div>\n</div>\n</html>"
 		end
